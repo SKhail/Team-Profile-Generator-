@@ -14,7 +14,6 @@ const render = require("./src/page-template.js");
 
 
 //An Array to store the answers whe asking the questions 
-
 const team = [];
 
 //CLI Prompt
@@ -60,22 +59,17 @@ const questions = async () => {
         }
       },
       {
-        type: 'input',
+        type: 'list',
         name: 'role',
-        message: 'Provide your Role?',
-        // ensure a user type in the required field
-        validate: function (value) {
-          if (value.trim() === '') {
-            return 'Please Provide your Role? '
-          }
-          return true;
-        },
-
-      }]);
+        message: 'Select your Role?',
+        choices: ["Manager", "Engineer", "Intern",]
+      }
+    ]);
 
   // if Engineer role is used 
   if (answers.role === "Engineer") {
     // Prompt The user for the Github
+    console.log("Prompt user for Github");
     const { github } = await inquirer.prompt({
       type: 'input',
       name: 'github',
@@ -88,6 +82,8 @@ const questions = async () => {
         return true;
       },
     });
+    //testing if the data is passing correctly 
+    console.log("Github that was entered is:", github);
     //Create new engineer instance and add it to the team arr
     const newEngineer = new Engineer(
       answers.name,
@@ -114,6 +110,9 @@ const questions = async () => {
           return true;
         },
       });
+
+    //testing if the data is passing correctly
+    console.log("School that was entered is:", school);
     //Create new Intern instance and add it to the team arr
     const newIntern = new Intern(
       answers.name,
@@ -141,6 +140,9 @@ const questions = async () => {
           return true;
         }
       });
+
+    //testing if the data is passing correctly
+    console.log("officeNumber that was entered is:", officeNumber);
     //Create new Manager instance and add it to the team arr
     const newManager = new Manager(
       answers.name,
@@ -154,16 +156,38 @@ const questions = async () => {
 
 }
 
+//Prompting the role , new memeber
+async function promptQuestions() {
+  await questions()
 
-async function buildTeam() {
-  //prompting the user the questions first
-  await questions();
-  console.log("new person", team)
-  fs.writeFileSync("./index.html",
-    render(team), "utf-8");
+  const addCollegue = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'addTeamMember',
+      choices: ['new team member', 'add team'],
+      message: 'Please tell me what you would like to do next?',
+    },
+  ]);
+
+  if (addCollegue.addTeamMember === 'new team member') {
+    return promptQuestions();
+  } else {
+    createHtml();
+  }
 
 }
 
-buildTeam();
+
+
+async function createHtml() {
+  //prompting the user the questions first
+  await promptQuestions();
+  console.log("new person", team)
+  //render the function
+  fs.writeFileSync("./index.html", render(team), "utf-8");
+
+}
+
+createHtml();
 
 

@@ -1,0 +1,37 @@
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: antiquewhite;
+}
+
+.container-fluid {
+  padding: 20px;
+}
+
+.employee-card {
+  display: flex;
+  flex-direction: column;
+  background-color: brown;
+  justify-content: space-between;
+  margin: 10px;
+  background-color: whitesmoke;
+  max-width: 280px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  border-bottom: 1px solid black;
+  padding: 10px;
+}
+
+.card-title {
+  margin: 0;
+}
+
+.card-body {
+  padding: 10px;
+}
+
+.list-group-item {
+  border: none;
+  padding: 5px 0;
+}
