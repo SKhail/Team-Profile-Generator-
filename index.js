@@ -176,9 +176,6 @@ async function promptQuestions() {
   }
 
 }
-
-
-
 async function createHtml() {
   //prompting the user the questions first
   await promptQuestions();
