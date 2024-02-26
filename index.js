@@ -11,6 +11,7 @@ const fs = require("fs");
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./src/page-template.js");
+const { default: generate } = require("@babel/generator");
 
 //An Array to store the answers whe asking the questions 
 
@@ -48,8 +49,9 @@ const questions = async () => {
     name: 'email',
     message: ' Provide your Email Address?',
     validate: function (value) {
-     if (value.trim() === '') {
-      return 'Please add your Email Address?'
+     const emailChar = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;  //Check if it meets the correct email address format
+     if (!emailChar.test(value)) {
+      return 'Enter a valid Email Address'
      }
      return true;
     }
@@ -145,14 +147,19 @@ const questions = async () => {
   newStaff.push(newManager);
  }
 
- questions();
 
-
-
- function buildTeam() {
-  console.log("new person", newStaff);
- }
 }
+
+
+function buildTeam() {
+ console.log("new person", newStaff)
+ fs.writeFileSync("./index.html",
+  render(newStaff), "utf-8");
+
+}
+
+buildTeam();
+questions();
 
 
 
