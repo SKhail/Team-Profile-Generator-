@@ -33,7 +33,9 @@ The Team Profile Generator is a Node.js command line application (CLI) designed 
 
     ```
     git clone https://github.com/SKhail/Team-Profile-Generator-.git
+    ```
 
+    ```
     npm install
     ```
 
