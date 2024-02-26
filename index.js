@@ -26,9 +26,10 @@ const questions = async () => {
     type: 'input',
     name: 'name',
     message: 'What is your name?',
+    // ensure a user type in the required field
     validate: function (value) {
      if (value.trim() === '') {
-      return 'Please enter your name? ' // ensure a user type in the required field
+      return 'Please enter your name? '
      }
      return true;
     }
@@ -36,10 +37,11 @@ const questions = async () => {
    {
     type: 'input',
     name: 'id',
-    message: 'What is your Id Number?',
+    message: 'What is your ID Number?',
+    //Validation consisting only digits 
     validate: function (value) {
-     if (value.trim() === '') {
-      return 'Please enter your ID number?'
+     if (!/^\d+$/.text(value.trim())) {
+      return 'Please enter a valid ID containing digits only'
      }
      return true;
     }
@@ -48,8 +50,9 @@ const questions = async () => {
     type: 'input',
     name: 'email',
     message: ' Provide your Email Address?',
+    // it meets the correct email address format
     validate: function (value) {
-     const emailChar = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;  //Check if it meets the correct email address format
+     const emailChar = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;  //Check if 
      if (!emailChar.test(value)) {
       return 'Enter a valid Email Address'
      }
@@ -60,6 +63,7 @@ const questions = async () => {
     type: 'input',
     name: 'role',
     message: 'Provide your Role?',
+    // ensure a user type in the required field
     validate: function (value) {
      if (value.trim() === '') {
       return 'Please Provide your Role? '
@@ -129,13 +133,13 @@ const questions = async () => {
     type: 'input',
     name: 'officeNumber',
     message: 'Please Provide your Office Number?',
-    //Validation that the field is not empty
+    //that the field contains Digits only
     validate: function (value) {
-     if (value.trim() === '') {
-      return 'Please Provide the correct Office Number?'
+     if (!/^\d+$/.text(value.trim())) {
+      return 'Please enter a valid ID containing digits only'
      }
      return true;
-    },
+    }
    });
   //Create new Manager instance and add it to the newstaff arr
   const newManager = new Manager(
