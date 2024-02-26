@@ -67,60 +67,92 @@ const questions = async () => {
 
    }]);
 
-
- // if Engineer role is used and new Engineer
- if (answers.roles === "Engineer") {
-  const githubNumber = await inquirer
-   .prompt({
-    type: 'input',
-    name: 'Github',
-    message: 'Please provide your Github userName?',
-    validate: function (value) {
-     if (value.trim() === '') {
-      return 'Please Provide the correct  Github userName?'
-     }
-     return true;
-    },
-   }),
+ // if Engineer role is used 
+ if (answers.role === "Engineer") {
+  // Prompt The user for the Github
+  const { github } = await inquirer.prompt({
+   type: 'input',
+   name: 'Github',
+   message: 'Please provide your Github userName?',
+   //Validation that the field is not empty
+   validate: function (value) {
+    if (value.trim() === '') {
+     return 'Please Provide the correct  Github userName?'
+    }
+    return true;
+   },
+  });
+  //Create new engineer instance and add it to the newstaff arr
   const newEngineer = new Engineer(
    answers.name,
    answers.id,
    answers.email,
-   githubNumber.github
+   github
   );
   newStaff.push(newEngineer);
  }
 
+ //If Intern is used 
+ if (answers.role === "Intern") {
+  // Prompt The user for the name of University
+  const { school } = await inquirer
+   .prompt({
+    type: 'input',
+    name: 'school',
+    message: 'Please provide the University you attend?',
+    //Validation that the field is not empty
+    validate: function (value) {
+     if (value.trim() === '') {
+      return 'Please Provide the correct University you attend?'
+     }
+     return true;
+    },
+   });
+  //Create new Intern instance and add it to the newstaff arr
+  const newIntern = new Intern(
+   answers.name,
+   answers.id,
+   answers.email,
+   school
+  );
+  newStaff.push(newIntern);
+ }
 
- //If Intern is used and new Intern 
 
-
-
-
- // if Manager Role is used and new Manager
- if (answers.roles === "Manager") {
-  const managerIdNumber = await inquirer
+ // if Manager Role is used 
+ if (answers.role === "Manager") {
+  // Prompt The user for the their Office Number
+  const { officeNumber } = await inquirer
    .prompt({
     type: 'input',
     name: 'officeNumber',
     message: 'Please Provide your Office Number?',
+    //Validation that the field is not empty
     validate: function (value) {
      if (value.trim() === '') {
       return 'Please Provide the correct Office Number?'
      }
      return true;
     },
-   }),
+   });
+  //Create new Manager instance and add it to the newstaff arr
   const newManager = new Manager(
    answers.name,
    answers.id,
    answers.email,
-   managerIdNumber.officeNumber
+   officeNumber
   );
   newStaff.push(newManager);
  }
 
+ questions();
 
+
+
+ function buildTeam() {
+  console.log("new person", newStaff);
+ }
+}
 
 
 
